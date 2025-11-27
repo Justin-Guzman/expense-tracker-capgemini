@@ -2,6 +2,7 @@ import csv
 from datetime import datetime
 from pathlib import Path
 from typing import List
+from uuid import uuid4
 
 from .models import Expense
 
@@ -23,7 +24,10 @@ def load_expenses(path: str) -> List[Expense]:
                 expense_date = datetime.strptime(row["date"], DATE_FORMAT).date()
                 category = row["category"]
                 amount = float(row["amount"])
-                expenses.append(Expense(date=expense_date, category=category, amount=amount))
+                expense_id = row.get("id") or uuid4().hex
+                expenses.append(
+                    Expense(date=expense_date, category=category, amount=amount, id=expense_id)
+                )
             except (KeyError, ValueError):
                 # In a real app, we might log this; for now, skip bad rows
                 continue
@@ -35,12 +39,13 @@ def save_expenses(path: str, expenses: List[Expense]) -> None:
     file_path.parent.mkdir(parents=True, exist_ok=True)
 
     with file_path.open("w", newline="", encoding="utf-8") as f:
-        fieldnames = ["date", "category", "amount"]
+        fieldnames = ["id", "date", "category", "amount"]
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         for e in expenses:
             writer.writerow(
                 {
+                    "id": e.id,
                     "date": e.date.strftime(DATE_FORMAT),
                     "category": e.category,
                     "amount": f"{e.amount:.2f}",

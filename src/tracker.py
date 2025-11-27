@@ -44,3 +44,25 @@ class ExpenseTracker:
             totals[e.date] += e.amount
         # Return as a normal dict but sorted by date for predictable output
         return dict(sorted(totals.items(), key=lambda kv: kv[0]))
+
+    def get_expense(self, expense_id: str) -> Expense | None:
+        for expense in self.expenses:
+            if expense.id == expense_id:
+                return expense
+        return None
+
+    def update_expense(self, expense_id: str, *, date: date, category: str, amount: float) -> bool:
+        expense = self.get_expense(expense_id)
+        if not expense:
+            return False
+        expense.date = date
+        expense.category = category
+        expense.amount = amount
+        return True
+
+    def delete_expense(self, expense_id: str) -> bool:
+        for idx, expense in enumerate(self.expenses):
+            if expense.id == expense_id:
+                del self.expenses[idx]
+                return True
+        return False

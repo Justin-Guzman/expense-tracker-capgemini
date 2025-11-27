@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Expense Tracker</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f2f4f7;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+      h1 {
+        text-align: center;
+        color: #1f2933;
+      }
+      .card {
+        background: #fff;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      }
+      label {
+        display: block;
+        margin-bottom: 0.75rem;
+      }
+      input[type="text"],
+      input[type="number"],
+      input[type="date"] {
+        width: 100%;
+        padding: 0.5rem;
+        margin-top: 0.25rem;
+        border-radius: 4px;
+        border: 1px solid #cbd2d9;
+      }
+      button {
+        background: #2563eb;
+        color: #fff;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+      button:hover {
+        background: #1d4ed8;
+      }
+      .alert {
+        padding: 0.75rem 1rem;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+      }
+      .alert.error {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+      .alert.success {
+        background: #dcfce7;
+        color: #166534;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 0.5rem;
+      }
+      th,
+      td {
+        padding: 0.5rem;
+        text-align: left;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      td.actions {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      td.actions form {
+        margin: 0;
+      }
+      td.actions button {
+        background: #dc2626;
+      }
+      td.actions button:hover {
+        background: #b91c1c;
+      }
+      ul {
+        padding-left: 1.25rem;
+      }
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+      }
+      .metric {
+        background: #f9fafb;
+        padding: 1rem;
+        border-radius: 6px;
+        text-align: center;
+      }
+      .metric h3 {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #6b7280;
+      }
+      .metric p {
+        margin: 0.5rem 0 0;
+        font-size: 1.5rem;
+        color: #111827;
+      }
+      .text-link {
+        color: #2563eb;
+        text-decoration: none;
+      }
+      .text-link:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Simple Expense Tracker</h1>
+
+      {% if message %}
+      <div class="alert success">{{ message }}</div>
+      {% endif %}
+      {% if error %}
+      <div class="alert error">{{ error }}</div>
+      {% endif %}
+
+      <section class="card">
+        <h2>Add Expense</h2>
+        <form method="post">
+          <label>
+            Category
+            <input
+              type="text"
+              name="category"
+              placeholder="Food, Rent, Travel..."
+              value="{{ form_data.category }}"
+              required
+            />
+          </label>
+          <label>
+            Amount
+            <input
+              type="number"
+              name="amount"
+              step="0.01"
+              min="0"
+              placeholder="0.00"
+              value="{{ form_data.amount }}"
+              required
+            />
+          </label>
+          <label>
+            Date
+            <input type="date" name="date" value="{{ form_data.date }}" />
+          </label>
+          <button type="submit">Add Expense</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>Summary</h2>
+        <div class="summary-grid">
+          <div class="metric">
+            <h3>Total Expense</h3>
+            <p>${{ "%.2f"|format(total) }}</p>
+          </div>
+          <div class="metric">
+            <h3>Highest Category</h3>
+            <p>{{ highest or "N/A" }}</p>
+          </div>
+          <div class="metric">
+            <h3>Lowest Category</h3>
+            <p>{{ lowest or "N/A" }}</p>
+          </div>
+        </div>
+
+        <h3>Total by Category</h3>
+        {% if totals_by_cat %}
+        <ul>
+          {% for cat, amt in totals_by_cat.items() %}
+          <li>{{ cat }}: ${{ "%.2f"|format(amt) }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p>No expenses recorded yet.</p>
+        {% endif %}
+
+        <h3>Expense Trend</h3>
+        {% if trend %}
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for date_value, amt in trend %}
+            <tr>
+              <td>{{ date_value }}</td>
+              <td>${{ "%.2f"|format(amt) }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <p>Trend will appear once you add expenses.</p>
+        {% endif %}
+      </section>
+
+      <section class="card">
+        <h2>Expenses</h2>
+        {% if expenses %}
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Category</th>
+              <th>Amount</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for expense in expenses %}
+            <tr>
+              <td>{{ expense.date }}</td>
+              <td>{{ expense.category }}</td>
+              <td>${{ "%.2f"|format(expense.amount) }}</td>
+              <td class="actions">
+                <a class="text-link" href="{{ url_for('edit_expense', expense_id=expense.id) }}">Edit</a>
+                <form
+                  method="post"
+                  action="{{ url_for('delete_expense', expense_id=expense.id) }}"
+                  onsubmit="return confirm('Delete this expense?');"
+                >
+                  <button type="submit">Delete</button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <p>No expenses recorded yet.</p>
+        {% endif %}
+      </section>
+    </div>
+  </body>
+</html>
