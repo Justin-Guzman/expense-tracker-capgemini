@@ -119,6 +119,7 @@ def index():
     totals_by_cat = tracker.total_by_category()
     highest, lowest = tracker.highest_and_lowest_category()
     trend = [(d.isoformat(), amt) for d, amt in tracker.trend_by_date().items()]
+    monthly_totals = tracker.total_by_month()
     expenses = sorted(tracker.expenses, key=lambda e: e.date, reverse=True)
 
     return render_template(
@@ -133,6 +134,7 @@ def index():
         lowest=lowest,
         expenses=expenses,
         categories=CATEGORIES,
+        monthly_totals=monthly_totals,
     )
 
 

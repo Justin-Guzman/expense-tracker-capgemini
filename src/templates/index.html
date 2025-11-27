@@ -3,12 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <title>Expense Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
       body {
         font-family: Arial, sans-serif;
         background: #f2f4f7;
         margin: 0;
         padding: 0;
+      }
+      canvas {
+        max-width: 100%;
       }
       .container {
         max-width: 900px;
@@ -236,6 +240,15 @@
       </section>
 
       <section class="card">
+        <h2>Monthly Trend</h2>
+        {% if monthly_totals %}
+        <canvas id="monthlyChart" width="400" height="200"></canvas>
+        {% else %}
+        <p>Add expenses to view the monthly chart.</p>
+        {% endif %}
+      </section>
+
+      <section class="card">
         <h2>Expenses</h2>
         {% if expenses %}
         <table>
@@ -274,5 +287,36 @@
         {% endif %}
       </section>
     </div>
+    {% if monthly_totals %}
+    <script>
+      const monthlyCtx = document.getElementById("monthlyChart").getContext("2d");
+      new Chart(monthlyCtx, {
+        type: "line",
+        data: {
+          labels: {{ monthly_totals.keys() | list | tojson }},
+          datasets: [
+            {
+              label: "Monthly Total ($)",
+              data: {{ monthly_totals.values() | list | tojson }},
+              borderColor: "#2563eb",
+              backgroundColor: "rgba(37, 99, 235, 0.1)",
+              fill: true,
+              tension: 0.3,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: (value) => `$${value}`,
+              },
+            },
+          },
+        },
+      });
+    </script>
+    {% endif %}
   </body>
 </html>

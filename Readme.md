@@ -1,30 +1,42 @@
 # Simple Expense Tracker
 
 ## Overview
-A command-line application to track daily expenses by category and date.
-It computes:
-- Total expense
-- Total expense by category
-- Expense trend over time (by date)
-- Highest and lowest spend categories
+A lightweight web application for tracking daily expenses with a friendly UI. Users can:
+- Add expenses with category (from a dropdown), amount, date, and description.
+- View running totals, highest/lowest spend categories (aggregated), and per-category totals.
+- See both a daily trend table and a monthly line chart powered by Chart.js.
+- Edit or delete existing entries, with all data persisted to a CSV file.
+
+A legacy CLI (`src/main.py`) still exists but the primary interface is now the browser app.
 
 ## Tech Stack
 - Python 3.x
-- Standard library only (csv, datetime, unittest)
+- Flask for the web server/templates
+- Chart.js (via CDN) for the monthly trend visualization
+- CSV files for persistence (no database required)
 
 ## Project Structure
-- `src/models.py` – Expense data model
-- `src/tracker.py` – Core business logic (aggregations, trends)
+- `src/models.py` – Expense data model (with UUID IDs and descriptions)
+- `src/tracker.py` – Core business logic (aggregations, trends, CRUD helpers)
 - `src/storage.py` – CSV load/save utilities
-- `src/main.py` – Command-line interface
-- `data/expenses_seed.csv` – Sample/seed data
-- `tests/test_tracker.py` – Unit tests
+- `src/web_app.py` – Flask app entry point
+- `src/templates/` – HTML templates (main dashboard + edit form)
+- `src/main.py` – Legacy CLI interface (optional)
+- `data/expenses.csv` – Persisted expense data
+- `tests/` – Unit tests for tracker logic
 
-## How to Run
+## Getting Started
 
 ```bash
 python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
-pip install -r requirements.txt  # optional if you add dependencies
+source venv/bin/activate        # Windows: venv\Scripts\activate
+python -m pip install -r requirements.txt
+```
 
-python -m src.main
+## Run the Web App
+
+```bash
+python -m flask --app src.web_app run --debug
+```
+
+Visit http://127.0.0.1:5000/ to add, edit, and analyze expenses. Data is saved to `data/expenses.csv`, so it persists between sessions.

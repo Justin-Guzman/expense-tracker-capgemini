@@ -1,9 +1,9 @@
-date,category,amount
-2025-11-01,Food,12.50
-2025-11-01,Transport,3.25
-2025-11-02,Rent,900.00
-2025-11-03,Food,20.00
-2025-11-03,Entertainment,15.00
-2025-11-04,Utilities,80.00
-2025-11-04,Food,10.75
-2025-11-05,Travel,150.00
+id,date,category,description,amount
+seed1,2025-11-01,Food,Grocery run,12.50
+seed2,2025-11-01,Transportation,Bus fare,3.25
+seed3,2025-11-02,Housing,November rent,900.00
+seed4,2025-11-03,Food,Lunch out,20.00
+seed5,2025-11-03,Entertainment,Movie night,15.00
+seed6,2025-11-04,Utilities,Electric bill,80.00
+seed7,2025-11-04,Food,Coffee shop,10.75
+seed8,2025-11-05,Travel,Trip to Cancun deposit,150.00

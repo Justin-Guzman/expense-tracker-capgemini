@@ -46,6 +46,16 @@ class ExpenseTracker:
         # Return as a normal dict but sorted by date for predictable output
         return dict(sorted(totals.items(), key=lambda kv: kv[0]))
 
+    def total_by_month(self) -> Dict[str, float]:
+        """
+        Returns totals grouped by YYYY-MM.
+        """
+        totals: Dict[str, float] = defaultdict(float)
+        for e in self.expenses:
+            key = e.date.strftime("%Y-%m")
+            totals[key] += e.amount
+        return dict(sorted(totals.items(), key=lambda kv: kv[0]))
+
     def get_expense(self, expense_id: str) -> Expense | None:
         for expense in self.expenses:
             if expense.id == expense_id:
