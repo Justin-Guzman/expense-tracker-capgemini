@@ -1,6 +1,6 @@
 from collections import defaultdict
 from datetime import date
-from typing import List, Dict, Tuple
+from typing import Dict, List, Tuple
 
 from .models import Expense
 
@@ -21,17 +21,18 @@ class ExpenseTracker:
             totals[e.category] += e.amount
         return dict(totals)
 
-    def highest_and_lowest_category(self) -> Tuple[str | None, str | None]:
+    def highest_and_lowest_category(self) -> Tuple[Tuple[str, float] | None, Tuple[str, float] | None]:
         """
-        Returns (highest_category, lowest_category).
+        Returns (highest_category_with_total, lowest_category_with_total).
+        Each entry is a tuple of (category_name, total_amount).
         If there are no expenses, returns (None, None).
         """
         totals = self.total_by_category()
         if not totals:
             return None, None
 
-        highest = max(totals.items(), key=lambda kv: kv[1])[0]
-        lowest = min(totals.items(), key=lambda kv: kv[1])[0]
+        highest = max(totals.items(), key=lambda kv: kv[1])
+        lowest = min(totals.items(), key=lambda kv: kv[1])
         return highest, lowest
 
     def trend_by_date(self) -> Dict[date, float]:
@@ -51,13 +52,16 @@ class ExpenseTracker:
                 return expense
         return None
 
-    def update_expense(self, expense_id: str, *, date: date, category: str, amount: float) -> bool:
+    def update_expense(
+        self, expense_id: str, *, date: date, category: str, amount: float, description: str
+    ) -> bool:
         expense = self.get_expense(expense_id)
         if not expense:
             return False
         expense.date = date
         expense.category = category
         expense.amount = amount
+        expense.description = description
         return True
 
     def delete_expense(self, expense_id: str) -> bool:

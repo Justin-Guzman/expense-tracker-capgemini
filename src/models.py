@@ -8,4 +8,5 @@ class Expense:
     date: date
     category: str
     amount: float
+    description: str = ""
     id: str = field(default_factory=lambda: uuid4().hex)

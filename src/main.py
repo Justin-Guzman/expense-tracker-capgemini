@@ -25,6 +25,7 @@ def prompt_expense() -> Expense:
     category = input("Enter category (e.g., Food, Rent, Travel): ").strip()
     amount_str = input("Enter amount: ").strip()
     date_str = input("Enter date (YYYY-MM-DD, leave blank for today): ").strip()
+    description = input("Enter description (optional): ").strip()
 
     try:
         amount = float(amount_str)
@@ -38,7 +39,7 @@ def prompt_expense() -> Expense:
         print("Invalid date. Please use YYYY-MM-DD.")
         return prompt_expense()
 
-    return Expense(date=d, category=category, amount=amount)
+    return Expense(date=d, category=category, amount=amount, description=description)
 
 
 def show_summary(tracker: ExpenseTracker) -> None:
@@ -51,8 +52,10 @@ def show_summary(tracker: ExpenseTracker) -> None:
         print(f"  {cat}: ${amt:.2f}")
 
     highest, lowest = tracker.highest_and_lowest_category()
-    print("\nHighest spend category:", highest if highest else "N/A")
-    print("Lowest spend category:", lowest if lowest else "N/A")
+    highest_text = f"{highest[0]} (${highest[1]:.2f})" if highest else "N/A"
+    lowest_text = f"{lowest[0]} (${lowest[1]:.2f})" if lowest else "N/A"
+    print("\nHighest spend category:", highest_text)
+    print("Lowest spend category:", lowest_text)
 
     print("\nExpense trend (by date):")
     trend = tracker.trend_by_date()

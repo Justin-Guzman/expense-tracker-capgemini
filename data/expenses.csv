@@ -1,3 +1,7 @@
-id,date,category,amount
-fc9c4fbdec4144ab978dd755b4b7d899,2025-11-27,Rent,1500.00
-086f841f8c3a418b910aef438c893b00,2025-12-01,Travel Cancun,8000.00
+id,date,category,description,amount
+fdaa8cd586da4f4db226a3496f78356b,2025-11-24,Food,Mcdonalds,20.00
+b06920e5fca94b79abdad465c6647be5,2025-11-01,Housing,Mortgage,2000.00
+7e890f19d6584e83921cefdac6ff2ca2,2025-11-30,Utilities,Month of November,420.00
+e33b7d16ee3b43b58d15d4df6c3cfe1f,2025-11-01,Transportation,Car note,1000.00
+3fd03d6d973b448794c058ab7b3be546,2025-11-27,Food,Groceries for the month of November,500.00
+341ecbeaec3142ed98c8a2541af83092,2025-11-26,Transportation,Extra car note,2600.00

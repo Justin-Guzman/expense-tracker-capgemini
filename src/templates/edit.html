@@ -28,12 +28,18 @@
       }
       input[type="text"],
       input[type="number"],
-      input[type="date"] {
+      input[type="date"],
+      select,
+      textarea {
         width: 100%;
         padding: 0.5rem;
         margin-top: 0.25rem;
         border-radius: 4px;
         border: 1px solid #cbd2d9;
+      }
+      textarea {
+        min-height: 80px;
+        resize: vertical;
       }
       .actions {
         display: flex;
@@ -85,7 +91,13 @@
       <form method="post">
         <label>
           Category
-          <input type="text" name="category" value="{{ form_data.category }}" required />
+          <select name="category" required>
+            {% for category in categories %}
+            <option value="{{ category }}" {% if form_data.category == category %}selected{% endif %}>
+              {{ category }}
+            </option>
+            {% endfor %}
+          </select>
         </label>
         <label>
           Amount
@@ -101,6 +113,10 @@
         <label>
           Date
           <input type="date" name="date" value="{{ form_data.date }}" />
+        </label>
+        <label>
+          Description
+          <textarea name="description">{{ form_data.description }}</textarea>
         </label>
         <div class="actions">
           <button type="submit">Save Changes</button>

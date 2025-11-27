@@ -15,6 +15,16 @@ except ModuleNotFoundError:
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_FILE = BASE_DIR / "data" / "expenses.csv"
+CATEGORIES = [
+    "Food",
+    "Housing",
+    "Travel",
+    "Entertainment",
+    "Utilities",
+    "Health",
+    "Transportation",
+    "Other",
+]
 
 app = Flask(__name__)
 
@@ -35,6 +45,7 @@ def process_expense_form(form_data: dict[str, str]):
         "category": form_data.get("category", "").strip(),
         "amount": form_data.get("amount", "").strip(),
         "date": form_data.get("date", "").strip(),
+        "description": form_data.get("description", "").strip(),
     }
 
     error = None
@@ -48,6 +59,8 @@ def process_expense_form(form_data: dict[str, str]):
 
     if not values["category"]:
         error = error or "Category is required."
+    elif values["category"] not in CATEGORIES:
+        error = error or "Please choose a category from the list."
 
     try:
         date_value = parse_date(values["date"])
@@ -62,6 +75,7 @@ def process_expense_form(form_data: dict[str, str]):
         "category": values["category"],
         "amount": amount_value,
         "date": date_value,
+        "description": values["description"],
     }, None
 
 
@@ -78,15 +92,17 @@ def index():
                 date=parsed_data["date"],
                 category=parsed_data["category"],
                 amount=parsed_data["amount"],
+                description=parsed_data["description"],
             )
             tracker.add_expense(expense)
             save_expenses(str(DATA_FILE), tracker.expenses)
             return redirect(url_for("index", status="added"))
     else:
         form_defaults = {
-            "category": "",
+            "category": CATEGORIES[0],
             "amount": "",
             "date": date.today().isoformat(),
+            "description": "",
         }
 
     status = request.args.get("status")
@@ -116,6 +132,7 @@ def index():
         highest=highest,
         lowest=lowest,
         expenses=expenses,
+        categories=CATEGORIES,
     )
 
 
@@ -135,6 +152,7 @@ def edit_expense(expense_id: str):
                 date=parsed_data["date"],
                 category=parsed_data["category"],
                 amount=parsed_data["amount"],
+                description=parsed_data["description"],
             )
             save_expenses(str(DATA_FILE), tracker.expenses)
             return redirect(url_for("index", status="edited"))
@@ -143,6 +161,7 @@ def edit_expense(expense_id: str):
             "category": expense.category,
             "amount": f"{expense.amount:.2f}",
             "date": expense.date.isoformat(),
+            "description": expense.description,
         }
 
     return render_template(
@@ -150,6 +169,7 @@ def edit_expense(expense_id: str):
         form_data=form_values,
         error=error,
         expense=expense,
+        categories=CATEGORIES,
     )
 
 

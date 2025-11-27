@@ -32,12 +32,18 @@
       }
       input[type="text"],
       input[type="number"],
-      input[type="date"] {
+      input[type="date"],
+      select,
+      textarea {
         width: 100%;
         padding: 0.5rem;
         margin-top: 0.25rem;
         border-radius: 4px;
         border: 1px solid #cbd2d9;
+      }
+      textarea {
+        min-height: 80px;
+        resize: vertical;
       }
       button {
         background: #2563eb;
@@ -138,13 +144,13 @@
         <form method="post">
           <label>
             Category
-            <input
-              type="text"
-              name="category"
-              placeholder="Food, Rent, Travel..."
-              value="{{ form_data.category }}"
-              required
-            />
+            <select name="category" required>
+              {% for category in categories %}
+              <option value="{{ category }}" {% if form_data.category == category %}selected{% endif %}>
+                {{ category }}
+              </option>
+              {% endfor %}
+            </select>
           </label>
           <label>
             Amount
@@ -162,6 +168,10 @@
             Date
             <input type="date" name="date" value="{{ form_data.date }}" />
           </label>
+          <label>
+            Description
+            <textarea name="description" placeholder="e.g., Trip to Cancun for summer break">{{ form_data.description }}</textarea>
+          </label>
           <button type="submit">Add Expense</button>
         </form>
       </section>
@@ -175,11 +185,19 @@
           </div>
           <div class="metric">
             <h3>Highest Category</h3>
-            <p>{{ highest or "N/A" }}</p>
+            {% if highest %}
+            <p>{{ highest[0] }} (${{ "%.2f"|format(highest[1]) }})</p>
+            {% else %}
+            <p>N/A</p>
+            {% endif %}
           </div>
           <div class="metric">
             <h3>Lowest Category</h3>
-            <p>{{ lowest or "N/A" }}</p>
+            {% if lowest %}
+            <p>{{ lowest[0] }} (${{ "%.2f"|format(lowest[1]) }})</p>
+            {% else %}
+            <p>N/A</p>
+            {% endif %}
           </div>
         </div>
 
@@ -225,6 +243,7 @@
             <tr>
               <th>Date</th>
               <th>Category</th>
+              <th>Description</th>
               <th>Amount</th>
               <th>Actions</th>
             </tr>
@@ -234,6 +253,7 @@
             <tr>
               <td>{{ expense.date }}</td>
               <td>{{ expense.category }}</td>
+              <td>{{ expense.description or "—" }}</td>
               <td>${{ "%.2f"|format(expense.amount) }}</td>
               <td class="actions">
                 <a class="text-link" href="{{ url_for('edit_expense', expense_id=expense.id) }}">Edit</a>
