@@ -39,3 +39,7 @@ python -m flask --app src.web_app run --debug
 ```
 
 Visit http://127.0.0.1:5000/ to add, edit, and analyze expenses. Data is saved to `data/expenses.csv`, so it persists between sessions.
+
+## Live Demo
+
+- https://expense-tracker-capgemini.onrender.com/ (hosted on Render; note that the free tier may spin down when idle, so the first request can take a few seconds)
