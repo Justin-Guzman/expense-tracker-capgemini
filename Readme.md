@@ -7,7 +7,6 @@ A lightweight web application for tracking daily expenses with a friendly UI. Us
 - See both a daily trend table and a monthly line chart powered by Chart.js.
 - Edit or delete existing entries, with all data persisted to a CSV file.
 
-A legacy CLI (`src/main.py`) still exists but the primary interface is now the browser app.
 
 ## Tech Stack
 - Python 3.x
