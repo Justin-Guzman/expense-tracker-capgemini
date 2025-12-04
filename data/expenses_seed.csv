@@ -1,9 +1,11 @@
 id,date,category,description,amount
-seed1,2025-11-01,Food,Grocery run,12.50
-seed2,2025-11-01,Transportation,Bus fare,3.25
-seed3,2025-11-02,Housing,November rent,900.00
-seed4,2025-11-03,Food,Lunch out,20.00
-seed5,2025-11-03,Entertainment,Movie night,15.00
-seed6,2025-11-04,Utilities,Electric bill,80.00
-seed7,2025-11-04,Food,Coffee shop,10.75
-seed8,2025-11-05,Travel,Trip to Cancun deposit,150.00
+fdaa8cd586da4f4db226a3496f78356b,2025-11-24,Food,Mcdonalds,20.00
+b06920e5fca94b79abdad465c6647be5,2025-11-01,Housing,Mortgage,2000.00
+7e890f19d6584e83921cefdac6ff2ca2,2025-11-30,Utilities,Month of November,420.00
+e33b7d16ee3b43b58d15d4df6c3cfe1f,2025-11-01,Transportation,Car note,1000.00
+3fd03d6d973b448794c058ab7b3be546,2025-11-27,Food,Groceries for the month of November,500.00
+341ecbeaec3142ed98c8a2541af83092,2025-11-26,Transportation,Extra car note,2600.00
+4f2156d123a64b49aba9e57172cf8300,2025-12-24,Housing,Mortgage,2000.00
+483a12ed05f84540a84684bcad998981,2025-10-14,Food,monthly total,300.00
+404e23913dac4f4a85b97a007936549a,2025-01-14,Food,month of jan,300.00
+c2811b8b42a949deabb4e6c025f5a9ad,2025-08-13,Other,Random charges,800.00

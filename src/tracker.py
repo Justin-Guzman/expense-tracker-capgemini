@@ -48,7 +48,7 @@ class ExpenseTracker:
 
     def total_by_month(self) -> Dict[str, float]:
         """
-        Returns totals grouped by YYYY-MM.
+        Returns totals grouped by YYYY-MM. in chart.js
         """
         totals: Dict[str, float] = defaultdict(float)
         for e in self.expenses:
