@@ -5,23 +5,24 @@ A lightweight web application for tracking daily expenses with a friendly UI. Us
 - Add expenses with category (from a dropdown), amount, date, and description.
 - View running totals, highest/lowest spend categories (aggregated), and per-category totals.
 - See both a daily trend table and a monthly line chart powered by Chart.js.
-- Edit or delete existing entries, with all data persisted to a CSV file.
+- Edit or delete existing entries, with all data persisted to SQLite and exported to CSV.
 
 
 ## Tech Stack
 - Python 3.x
 - Flask for the web server/templates
 - Chart.js (via CDN) for the monthly trend visualization
-- CSV files for persistence (no database required)
+- SQLite for persistence with CSV export
 
 ## Project Structure
 - `src/models.py` – Expense data model (with UUID IDs and descriptions)
 - `src/tracker.py` – Core business logic (aggregations, trends, CRUD helpers)
-- `src/storage.py` – CSV load/save utilities
+- `src/storage.py` – SQLite storage with CSV import/export
 - `src/web_app.py` – Flask app entry point
 - `src/templates/` – HTML templates (main dashboard + edit form)
 - `src/main.py` – Legacy CLI interface (optional)
-- `data/expenses.csv` – Persisted expense data
+- `data/expenses.db` – Persisted expense data (SQLite)
+- `data/expenses.csv` – CSV snapshot (exported)
 - `tests/` – Unit tests for tracker logic
 
 ## Getting Started
@@ -38,7 +39,7 @@ python -m pip install -r requirements.txt
 python -m flask --app src.web_app run --debug
 ```
 
-Visit http://127.0.0.1:5000/ to add, edit, and analyze expenses. Data is saved to `data/expenses.csv`, so it persists between sessions.
+Visit http://127.0.0.1:5000/ to add, edit, and analyze expenses. Data is saved to `data/expenses.db` and exported to `data/expenses.csv`.
 
 ## Live Demo
 

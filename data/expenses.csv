@@ -1,11 +1,19 @@
 id,date,category,description,amount
-fdaa8cd586da4f4db226a3496f78356b,2025-11-24,Food,Mcdonalds,20.00
-b06920e5fca94b79abdad465c6647be5,2025-11-01,Housing,Mortgage,2000.00
+4f2156d123a64b49aba9e57172cf8300,2025-12-24,Housing,Mortgage,2000.00
+9c314a6ce1e245848d4e0a998168119a,2025-12-21,Entertainment,Activities,200.00
 7e890f19d6584e83921cefdac6ff2ca2,2025-11-30,Utilities,Month of November,420.00
-e33b7d16ee3b43b58d15d4df6c3cfe1f,2025-11-01,Transportation,Car note,1000.00
 3fd03d6d973b448794c058ab7b3be546,2025-11-27,Food,Groceries for the month of November,500.00
 341ecbeaec3142ed98c8a2541af83092,2025-11-26,Transportation,Extra car note,2600.00
+<<<<<<< HEAD
 483a12ed05f84540a84684bcad998981,2025-10-14,Food,monthly total,300.00
 404e23913dac4f4a85b97a007936549a,2025-01-14,Food,month of jan,300.00
 b9c68762bdb04cefac5e0cac33d72a7d,2025-12-03,Utilities,waterbill,76.00
 51b3334c5e434b6aa0f0ecb348b631c3,2025-12-03,Food,food,20.00
+=======
+fdaa8cd586da4f4db226a3496f78356b,2025-11-24,Food,Mcdonalds,20.00
+b06920e5fca94b79abdad465c6647be5,2025-11-01,Housing,Mortgage,2000.00
+e33b7d16ee3b43b58d15d4df6c3cfe1f,2025-11-01,Transportation,Car note,1000.00
+483a12ed05f84540a84684bcad998981,2025-10-14,Food,monthly total,300.00
+c2811b8b42a949deabb4e6c025f5a9ad,2025-08-13,Other,Random charges,800.00
+404e23913dac4f4a85b97a007936549a,2025-01-14,Food,month of jan,300.00
+>>>>>>> 717dd5e (New SQL updates)

@@ -64,9 +64,11 @@ def process_expense_form(form_data: dict[str, str]):
 
     try:
         date_value = parse_date(values["date"])
+        if date_value > date.today():
+            raise ValueError
     except ValueError:
         date_value = None
-        error = error or "Invalid date format. Use YYYY-MM-DD."
+        error = error or "Date cannot be in the future. Use today or earlier."
 
     if error:
         return values, None, error
